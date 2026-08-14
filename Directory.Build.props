@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Product>Baru Board</Product>
+    <Authors>Lucas Augusto de Souza</Authors>
+    <Company>Lucas Augusto de Souza</Company>
+    <Copyright>Copyright (c) 2026 Lucas Augusto de Souza</Copyright>
+    <RepositoryUrl>https://github.com/LCASouza/Baru-Board</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+</Project>

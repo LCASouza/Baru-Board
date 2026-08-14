@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="BaruBoard.App.Views.ExportDialog"
+        Title="Exportar PNG"
+        Width="380"
+        SizeToContent="Height"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+    <StackPanel Margin="20" Spacing="16">
+        <StackPanel Spacing="6">
+            <TextBlock Text="Região" FontWeight="SemiBold" />
+            <RadioButton x:Name="ContentOption" GroupName="Region" Content="Todo o conteúdo" IsChecked="True" />
+            <RadioButton x:Name="SelectionOption" GroupName="Region" Content="Somente a seleção" />
+            <RadioButton x:Name="VisibleOption" GroupName="Region" Content="Área visível" />
+        </StackPanel>
+
+        <StackPanel Spacing="6">
+            <TextBlock Text="Escala" FontWeight="SemiBold" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <RadioButton x:Name="Scale1Option" GroupName="Scale" Content="1×" IsChecked="True" />
+                <RadioButton x:Name="Scale2Option" GroupName="Scale" Content="2×" />
+                <RadioButton x:Name="Scale3Option" GroupName="Scale" Content="3×" />
+            </StackPanel>
+        </StackPanel>
+
+        <CheckBox x:Name="TransparentOption" Content="Fundo transparente" />
+
+        <TextBlock x:Name="SummaryText" TextWrapping="Wrap" Opacity="0.8" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button x:Name="ConfirmButton" Content="Exportar" Click="OnConfirm" IsDefault="True" />
+            <Button Content="Cancelar" Click="OnCancel" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</Window>

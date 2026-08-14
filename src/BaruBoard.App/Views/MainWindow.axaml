@@ -1,0 +1,103 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BaruBoard.App.Controls"
+        xmlns:vm="using:BaruBoard.App.ViewModels"
+        x:Class="BaruBoard.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="{Binding Title}"
+        Width="1280"
+        Height="800">
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Ctrl+N" Command="{Binding NewBoardCommand}" />
+        <KeyBinding Gesture="Ctrl+O" Command="{Binding OpenBoardCommand}" />
+        <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveBoardCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding SaveBoardAsCommand}" />
+        <KeyBinding Gesture="Ctrl+E" Command="{Binding ExportPngCommand}" />
+        <KeyBinding Gesture="Ctrl+D0" Command="{Binding FitToScreenCommand}" />
+        <KeyBinding Gesture="Ctrl+D1" Command="{Binding ZoomToActualSizeCommand}" />
+    </Window.KeyBindings>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Arquivo">
+                <MenuItem Header="_Novo" Command="{Binding NewBoardCommand}" InputGesture="Ctrl+N" />
+                <MenuItem Header="_Abrir..." Command="{Binding OpenBoardCommand}" InputGesture="Ctrl+O" />
+                <MenuItem Header="Arquivos _recentes" ItemsSource="{Binding RecentFiles}">
+                    <MenuItem.ItemContainerTheme>
+                        <ControlTheme TargetType="MenuItem"
+                                      BasedOn="{StaticResource {x:Type MenuItem}}"
+                                      x:DataType="vm:RecentFileItem">
+                            <Setter Property="Header" Value="{Binding Header}" />
+                            <Setter Property="Command" Value="{Binding Command}" />
+                        </ControlTheme>
+                    </MenuItem.ItemContainerTheme>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Salvar" Command="{Binding SaveBoardCommand}" InputGesture="Ctrl+S" />
+                <MenuItem Header="Salvar _como..." Command="{Binding SaveBoardAsCommand}" InputGesture="Ctrl+Shift+S" />
+                <Separator />
+                <MenuItem Header="_Exportar PNG..." Command="{Binding ExportPngCommand}" InputGesture="Ctrl+E" />
+                <Separator />
+                <MenuItem Header="Sai_r" Command="{Binding ExitCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Inserir">
+                <MenuItem Header="_Imagem..." Command="{Binding InsertImageCommand}" />
+            </MenuItem>
+            <MenuItem Header="E_xibir">
+                <MenuItem Header="_Grade" ToggleType="CheckBox"
+                          IsChecked="{Binding IsGridVisible, Mode=TwoWay}" />
+                <MenuItem Header="_Ajustar à grade" ToggleType="CheckBox"
+                          IsChecked="{Binding IsSnapEnabled, Mode=TwoWay}" />
+                <Separator />
+                <MenuItem Header="A_justar à tela" Command="{Binding FitToScreenCommand}" InputGesture="Ctrl+0" />
+                <MenuItem Header="Zoom _100%" Command="{Binding ZoomToActualSizeCommand}" InputGesture="Ctrl+1" />
+                <Separator />
+                <MenuItem Header="_Diagnóstico" ToggleType="CheckBox"
+                          IsChecked="{Binding IsDiagnosticsVisible, Mode=TwoWay}" />
+                <MenuItem Header="Quadro sintético (DEBUG)"
+                          Command="{Binding GenerateSyntheticBoardCommand}"
+                          IsVisible="{Binding IsDebugBuild}" />
+            </MenuItem>
+            <MenuItem Header="_Organizar">
+                <MenuItem Header="Alinhar à _esquerda" Command="{Binding AlignCommand}" CommandParameter="Left" />
+                <MenuItem Header="Centralizar na _horizontal" Command="{Binding AlignCommand}" CommandParameter="HorizontalCenter" />
+                <MenuItem Header="Alinhar à _direita" Command="{Binding AlignCommand}" CommandParameter="Right" />
+                <Separator />
+                <MenuItem Header="Alinhar ao _topo" Command="{Binding AlignCommand}" CommandParameter="Top" />
+                <MenuItem Header="Centralizar na _vertical" Command="{Binding AlignCommand}" CommandParameter="VerticalCenter" />
+                <MenuItem Header="Alinhar à _base" Command="{Binding AlignCommand}" CommandParameter="Bottom" />
+                <Separator />
+                <MenuItem Header="Distribuir horizontalmente" Command="{Binding DistributeCommand}" CommandParameter="Horizontal" />
+                <MenuItem Header="Distribuir verticalmente" Command="{Binding DistributeCommand}" CommandParameter="Vertical" />
+            </MenuItem>
+        </Menu>
+
+        <ListBox DockPanel.Dock="Top"
+                 ItemsSource="{Binding ToolOptions}"
+                 SelectedItem="{Binding SelectedTool}"
+                 SelectionMode="Single,AlwaysSelected"
+                 Padding="4">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="2" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:ToolOption">
+                    <TextBlock Text="{Binding Label}" Margin="8,2" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Panel>
+            <controls:BoardCanvas x:Name="Board" />
+            <TextBox x:Name="TextEditor"
+                     IsVisible="False"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     AcceptsReturn="True"
+                     MinWidth="60"
+                     Background="White" />
+        </Panel>
+    </DockPanel>
+</Window>
